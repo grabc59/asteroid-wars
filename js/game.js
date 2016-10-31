@@ -10,7 +10,13 @@ var states = {
 };
 
 
-// graphicAssets data structure
+
+
+
+
+////////////////////////////////
+//////// GRAPHIC ASSETS
+////////////////////////////////
 // stores game images for manipulation
 // OBJECT { // object containing all graphics
 //  OBJECT:{ // object for the particular graphic
@@ -49,6 +55,11 @@ var graphicAssets = {
     },
 };
 
+
+
+//////////////////////////////
+////////// SOUND ASSETS
+//////////////////////////////
 var soundAssets = {
   fire: {
     URL: 'assets/sounds/x-wing-blaster-sound.mp3',
@@ -58,16 +69,22 @@ var soundAssets = {
 
 
 
+
+
+
 //////////////////////////////
 ////////// SHIP PROPERTIES
 //////////////////////////////
 var shipProperties = {
+    // ship will start at the center of the screen
     startX: gameProperties.screenWidth * 0.5,
     startY: gameProperties.screenHeight * 0.5,
+    // physics properties
     acceleration: 300,
     drag: 100,
     maxVelocity: 300,
     angularVelocity: 200,
+    // score properties
     startingLives: 3,
     timeToReset: 3,
     startingScore: 0,
@@ -81,11 +98,16 @@ var shipProperties = {
 ////////// BULLET PROPERTIES
 //////////////////////////////
 var bulletProperties = {
+    // physics properties
     speed: 400,
     interval: 250,
     lifespan: 2000,
     maxCount: 30,
 }
+
+
+
+
 
 //////////////////////////////
 ////////// ASTEROID PROPERTIES
@@ -109,6 +131,10 @@ var asteroidProperties = {
     },
 };
 
+
+
+
+
 var fontAssets = {
     // font to use for on screen display
     counterFontStyle: {
@@ -117,6 +143,9 @@ var fontAssets = {
         align: 'center'
     },
 };
+
+
+
 
 var gameState = function(game) {
     this.backgroundSprite;
@@ -373,6 +402,7 @@ gameState.prototype = {
         // if the object that hit the asteroid was the ship, run the shipDestroyed function
         if (target.key == graphicAssets.ship.name) {
             this.shipDestroyed();
+
         // if the object that hit the asteroid was the bullet, run the asteroidDestroyed function
         } else if (target.key == graphicAssets.bullet.name) {
           this.asteroidDestroyed(asteroid);
@@ -392,6 +422,10 @@ gameState.prototype = {
     asteroidDestroyed(asteroid) {
       this.score += asteroidProperties[asteroid.key].score;
       this.scoreDisplay.text = this.score;
+      if (this.score === 100) {
+        // queueYoda is defined in voice.js
+        queueYoda();
+      }
     },
 
     shipRespawn: function() {
