@@ -22,12 +22,12 @@ var states = {
 var graphicAssets = {
 
     background: {
-      URL: 'assets/temp-background.jpg',
+      URL: 'assets/deep-space-background.jpg',
       name: 'background',
     },
 
     ship: {
-        URL: 'assets/x-wing-small-right.png',
+        URL: 'assets/x-wing-white.png',
         name: 'ship'
     },
     bullet: {
@@ -36,7 +36,7 @@ var graphicAssets = {
     },
 
     asteroidLarge: {
-        URL: 'assets/tie-fighter-top.png',
+        URL: 'assets/tie-fighter-top-white.png',
         name: 'asteroidLarge'
     },
     asteroidMedium: {
@@ -49,7 +49,12 @@ var graphicAssets = {
     },
 };
 
-
+var soundAssets = {
+  fire: {
+    URL: 'assets/sounds/x-wing-blaster-sound.mp3',
+    name: 'fire',
+  },
+};
 
 
 
@@ -86,7 +91,7 @@ var bulletProperties = {
 ////////// ASTEROID PROPERTIES
 //////////////////////////////
 var asteroidProperties = {
-    startingAsteroids: 1, // # of asteroids at game start
+    startingAsteroids: 5, // # of asteroids at game start
     maxAsteroids: 20, // # asteroids that will appear in a round
     incrementAsteroids: 2, // # of additional asteroids per round
 
@@ -134,6 +139,8 @@ var gameState = function(game) {
     this.score = shipProperties.startingScore;
     this.scoreDisplay;
 
+    this.fireSound;
+
 };
 
 gameState.prototype = {
@@ -151,7 +158,9 @@ gameState.prototype = {
         game.load.image(graphicAssets.bullet.name, graphicAssets.bullet.URL);
         game.load.image(graphicAssets.ship.name, graphicAssets.ship.URL);
 
-
+        game.load.audio(soundAssets.fire.name, soundAssets.fire.URL);
+        console.log(soundAssets.fire.name);
+        console.log(soundAssets.fire.URL);
     },
 
 
@@ -160,6 +169,7 @@ gameState.prototype = {
     //////////////////////////////
     create: function() {
         this.initGraphics();
+        this.initSounds();
         this.initPhysics();
         this.initKeyboard();
         this.resetAsteroids();
@@ -203,6 +213,11 @@ gameState.prototype = {
         this.shipLivesDisplay = game.add.text(20, 10, shipProperties.startingLives, fontAssets.counterFontStyle);
 
         this.scoreDisplay = game.add.text(20, 30, shipProperties.startingScore, fontAssets.counterFontStyle);
+    },
+
+    initSounds: function() {
+      this.fireSound = game.add.audio(soundAssets.fire.name);
+
     },
 
     //////////////////////////////
@@ -285,6 +300,7 @@ gameState.prototype = {
     fire: function() {
         // check if the game clock has passed the minimum bullet fire interval
         if (game.time.now > this.bulletInterval) {
+          this.fireSound.play();
             // create a new bullet in our bullet group
             var bullet = this.bulletGroup.getFirstExists(false);
 
@@ -304,6 +320,9 @@ gameState.prototype = {
 
                 // set the bullet speed and direction
                 game.physics.arcade.velocityFromRotation(this.shipSprite.rotation, bulletProperties.speed, bullet.body.velocity);
+
+
+                console.log("fire");
                 // set when the bullet should disappear
                 this.bulletInterval = game.time.now + bulletProperties.interval;
             }
@@ -349,6 +368,7 @@ gameState.prototype = {
         // upon collision of 2 objects, delete them both
         target.kill();
         asteroid.kill();
+
 
         // if the object that hit the asteroid was the ship, run the shipDestroyed function
         if (target.key == graphicAssets.ship.name) {
