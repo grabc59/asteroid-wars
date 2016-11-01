@@ -1,7 +1,7 @@
 'use strict';
 // Canvas size
 var gameProperties = {
-    screenWidth: 900,
+    screenWidth: 760,
     screenHeight: 480,
 };
 
@@ -52,6 +52,14 @@ var graphicAssets = {
     asteroidSmall: {
         URL: 'assets/asteroidSmall.png',
         name: 'asteroidSmall'
+    },
+
+    explosionSmall: {
+      URL:'assets/explosionSmall.png',
+      name:'explosionSmall',
+      width:64,
+      height:64,
+      frames:16,
     },
 };
 
@@ -122,12 +130,14 @@ var asteroidProperties = {
     // minAngularVelocity: min rotation speed
     // maxAngularVelocity: max rotation speed
     // score: points a player will earn upon destroying
+    // explosion: the name property of the explosion image to use upon destruction
     asteroidLarge: {
         minVelocity: 50,
         maxVelocity: 150,
         minAngularVelocity: 0,
         maxAngularVelocity: 200,
         score: 20,
+        explosion: 'explosionSmall',
     },
 };
 
@@ -170,6 +180,8 @@ var gameState = function(game) {
 
     this.fireSound;
 
+    this.explosionSmallGroup;
+
 };
 
 gameState.prototype = {
@@ -188,8 +200,12 @@ gameState.prototype = {
         game.load.image(graphicAssets.ship.name, graphicAssets.ship.URL);
 
         game.load.audio(soundAssets.fire.name, soundAssets.fire.URL);
-        console.log(soundAssets.fire.name);
-        console.log(soundAssets.fire.URL);
+
+        game.load.spritesheet(
+          graphicAssets.explosionSmall.name,
+          graphicAssets.explosionSmall.URL, graphicAssets.explosionSmall.width, graphicAssets.explosionSmall.height, graphicAssets.explosionSmall.frames
+        );
+
     },
 
 
@@ -223,6 +239,7 @@ gameState.prototype = {
     //////////////////////////////
     initGraphics: function() {
 
+        // background must be first
         this.backgroundSprite = game.add.sprite(0, 0, graphicAssets.background.name);
 
         // add the player's ship to the game world
@@ -237,11 +254,22 @@ gameState.prototype = {
         // create a group of asteroids for manipulation
         this.asteroidGroup = game.add.group();
 
+        this.explosionSmallGroup = game.add.group();
+        this.explosionSmallGroup.createMultiple(20, graphicAssets.explosionSmall.name, 0);
+        this.explosionSmallGroup.setAll('anchor.x', 0.5);
+        this.explosionSmallGroup.setAll('anchor.y', 0.5);
+        // callAll adds explode animation to each boject in the explosionSmallGroup
+        // data structure:
+        // callAll( method, context, name for this animation, frames to use (null being all), fps )
+        this.explosionSmallGroup.callAll('animations.add', 'animations', 'explode', null, 30);
+
+
         // display remaining lives
         // (x coordinate, y coordinate, string, style)
         this.shipLivesDisplay = game.add.text(20, 10, shipProperties.startingLives, fontAssets.counterFontStyle);
 
         this.scoreDisplay = game.add.text(20, 30, shipProperties.startingScore, fontAssets.counterFontStyle);
+
     },
 
     initSounds: function() {
@@ -327,10 +355,15 @@ gameState.prototype = {
 
 
     fire: function() {
+        if (!this.shipSprite.alive) {
+          return;
+        }
+
         // check if the game clock has passed the minimum bullet fire interval
         if (game.time.now > this.bulletInterval) {
           this.fireSound.play();
-            // create a new bullet in our bullet group
+            // create a NEW bullet in our bullet group
+            // 'true' would return the first existing bullet in the group
             var bullet = this.bulletGroup.getFirstExists(false);
 
             // if a new bullet was successfully created (should always be true unless the max bullets number has been reached)...
@@ -396,7 +429,17 @@ gameState.prototype = {
     asteroidCollision: function(target, asteroid) {
         // upon collision of 2 objects, delete them both
         target.kill();
-        asteroid.kill();
+        asteroid.kill(); // explosion animation should kill the asteroid
+
+        // check which explosion group the killed asteroid is in
+        var explosionGroup = asteroidProperties[asteroid.key].explosion + "Group";
+        // create a new explosion for the appropriate group
+        var explosion = this[explosionGroup].getFirstExists(false);
+        // set the coordinates of the explosion animation to the asteroids coordinates
+        explosion.reset(asteroid.x, asteroid.y);
+        // .play arguments
+        // ( name, frameRate, loop, killOnComplete )
+        explosion.animations.play('explode', null, false, true);
 
 
         // if the object that hit the asteroid was the ship, run the shipDestroyed function
@@ -406,12 +449,15 @@ gameState.prototype = {
         // if the object that hit the asteroid was the bullet, run the asteroidDestroyed function
         } else if (target.key == graphicAssets.bullet.name) {
           this.asteroidDestroyed(asteroid);
+          // queueYoda is defined in voice.js
+          getRandomQuote();
         }
     },
 
     shipDestroyed: function() {
         this.shipLives --;
         this.shipLivesDisplay.text = this.shipLives;
+
 
         if (this.shipLives) {
             // arguments ( delay timer, callback, context )
@@ -423,8 +469,7 @@ gameState.prototype = {
       this.score += asteroidProperties[asteroid.key].score;
       this.scoreDisplay.text = this.score;
       if (this.score === 100) {
-        // queueYoda is defined in voice.js
-        queueYoda();
+
       }
     },
 

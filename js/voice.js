@@ -1,18 +1,20 @@
 'use strict';
-// $(document).ready(function() {
-function queueYoda() {
 
-    // locally available text quotes
-    var staticQuotes = [
-      "Fear is the path to the dark side. Fear leads to anger. Anger leads to hate. Hate leads to suffering.",
-      "Feel the force!",
-      "Do or do not. There is no try. Heeheehee",
-    ];
-    // pick one of the locally available text quotes
-    var randomQuote = staticQuotes[Math.floor(Math.random() * staticQuotes.length)];
+// locally available text quotes
+var staticQuotes = [
+  "Fear is the path to the dark side.",
+  "Feel the force!",
+  "Do or do not. There is no try. Heeheehee",
+];
+
+// pick one of the locally available text quotes
+function getRandomQuote() {
+  var randomQuote = $playerName + ", " + staticQuotes[Math.floor(Math.random() * staticQuotes.length)];
+  pullYodaAudio(randomQuote)
+};
 
 
-
+function pullYodaAudio(randomQuote) {
     // Request an audio file of the random text quote
     jQuery.getJSON(
         "http://vaas.acapela-group.com/Services/UrlMaker?jsoncallback=?", {
@@ -30,5 +32,4 @@ function queueYoda() {
             $("#demo_voices_player").html("<audio src='" + data.snd_url + "' controls='controls' autoplay='autoplay' style='display: none'/>");
         }
     );
-// });
 };

@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'distant-galaxy';
+  src: url('../assets/Distant-Galaxy/DISTGRG_.ttf');
+}
+
+
+
+
+
+/*   MODAL  */
+#welcome-modal-background {
+  background-color: black;
+}
+#welcome-modal-background h3, .inner h1 {
+  font-family: 'distant-galaxy';
+}
+
+#welcome-modal-background input, select, textarea{
+    color: black;
+}
+
+.modal-main {
+  margin-top: 150px;
+}
+
+
+
+/* NAV */
+.nav>li>a {
+    display: inline;
+}
+
+
+/* GAME */
+#gameDiv {
+}
+
+
+/* CONTENT */
+.inner .cover {
+  padding: 0;
+}
+.cover-container {
+  width: 800px;
+}
+
+@media (min-width: 768px) {
+  .masthead {
+    position: relative
+  }
+}
+
+
+/* HIGH SCORES */
+#highScores {
+  width: 40%;
+  margin: auto;
+}
+#highScores th {
+  width: 100%;
+}
