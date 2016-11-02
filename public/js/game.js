@@ -5,6 +5,7 @@ var gameProperties = {
     screenHeight: 480,
 };
 var states = {
+    main: "main",
     game: "game",
 };
 ////////////////////////////////
@@ -161,6 +162,22 @@ gameState.prototype = {
         this.initPhysics();
         this.initKeyboard();
         this.resetAsteroids();
+
+        // Create a label to use as a button
+       var pause_label = game.add.text(100, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
+       pause_label.inputEnabled = true;
+       pause_label.events.onInputUp.add(function () {
+       // When the paus button is pressed, we pause the game
+       game.paused = true;
+       pause_label.setText("play");
+        });
+        game.input.onDown.add(unpause, self);
+        function unpause(event){
+          if(game.paused){
+            game.paused = false;
+            pause_label.setText("Pause");
+          }
+        }
     },
     //////////////////////////////
     ////////// UPDATE
@@ -429,6 +446,9 @@ gameState.prototype = {
         this.shipSprite.angle = -90;
     }
 };
+var mainState = function(game) {
+  this.tf_start;
+}
 var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'gameDiv');
 game.state.add(states.game, gameState);
 game.state.start(states.game);
