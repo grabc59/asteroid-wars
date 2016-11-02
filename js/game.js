@@ -41,24 +41,24 @@ var graphicAssets = {
         name: 'bullet'
     },
 
-    asteroidLarge: {
+    enemySmall: {
         URL: 'assets/tie-fighter-top-white.png',
-        name: 'asteroidLarge'
+        name: 'enemySmall'
     },
-    asteroidMedium: {
-        URL: 'assets/asteroidMedium.png',
-        name: 'asteroidMedium'
-    },
-    asteroidSmall: {
-        URL: 'assets/asteroidSmall.png',
-        name: 'asteroidSmall'
-    },
+    // asteroidMedium: {
+    //     URL: 'assets/asteroidMedium.png',
+    //     name: 'asteroidMedium'
+    // },
+    // asteroidSmall: {
+    //     URL: 'assets/asteroidSmall.png',
+    //     name: 'asteroidSmall'
+    // },
 
     explosionSmall: {
       URL:'assets/explosionSmall.png',
       name:'explosionSmall',
-      width:64,
-      height:64,
+      width:128,
+      height:128,
       frames:16,
     },
 };
@@ -131,7 +131,7 @@ var asteroidProperties = {
     // maxAngularVelocity: max rotation speed
     // score: points a player will earn upon destroying
     // explosion: the name property of the explosion image to use upon destruction
-    asteroidLarge: {
+    enemySmall: {
         minVelocity: 50,
         maxVelocity: 150,
         minAngularVelocity: 0,
@@ -194,7 +194,7 @@ gameState.prototype = {
         // game.load.image(KEY, URL, [OVERWRITE])
         // optional overwrite argument, to replace an asset if the specified key already exists
         game.load.image(graphicAssets.background.name, graphicAssets.background.URL);
-        game.load.image(graphicAssets.asteroidLarge.name, graphicAssets.asteroidLarge.URL);
+        game.load.image(graphicAssets.enemySmall.name, graphicAssets.enemySmall.URL);
 
         game.load.image(graphicAssets.bullet.name, graphicAssets.bullet.URL);
         game.load.image(graphicAssets.ship.name, graphicAssets.ship.URL);
@@ -391,7 +391,7 @@ gameState.prototype = {
         }
     },
 
-    // size argument is asteroidSmall, asteroidMedium, or asteroidLarge
+    // size argument is asteroidSmall, asteroidMedium, or enemySmall
     createAsteroid: function(x, y, size) {
 
         // create a new asteroid and add it to the asteroid group
@@ -422,14 +422,14 @@ gameState.prototype = {
             var y;
             x = Math.random() * gameProperties.screenWidth;
             y = Math.random() * gameProperties.screenHeight;
-            this.createAsteroid(x, y, graphicAssets.asteroidLarge.name);
+            this.createAsteroid(x, y, graphicAssets.enemySmall.name);
         }
     },
 
     asteroidCollision: function(target, asteroid) {
         // upon collision of 2 objects, delete them both
         target.kill();
-        asteroid.kill(); // explosion animation should kill the asteroid
+        asteroid.kill();
 
         // check which explosion group the killed asteroid is in
         var explosionGroup = asteroidProperties[asteroid.key].explosion + "Group";
