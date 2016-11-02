@@ -12,7 +12,7 @@ var states = {
 
 // graphicAssets data structure
 // stores game images for manipulation
-// OBJECT { // object containing all graphics
+// OBJECT { // object containing all graphics 
 //  OBJECT:{ // object for the particular graphic
 //    URL: STRING, // the path of the image to use
 //    NAME: STRING // the reference to use for the graphic
