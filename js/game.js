@@ -4,34 +4,18 @@ var gameProperties = {
     screenWidth: 760,
     screenHeight: 480,
 };
-
 var states = {
     game: "game",
 };
-
-
-
-
-
-
 ////////////////////////////////
 //////// GRAPHIC ASSETS
 ////////////////////////////////
 // stores game images for manipulation
-// OBJECT { // object containing all graphics
-//  OBJECT:{ // object for the particular graphic
-//    URL: STRING, // the path of the image to use
-//    NAME: STRING // the reference to use for the graphic
-//    ...
-//  }
-// }
 var graphicAssets = {
-
     background: {
       URL: 'assets/deep-space-background.jpg',
       name: 'background',
     },
-
     ship: {
         URL: 'assets/x-wing-white.png',
         name: 'ship'
@@ -40,7 +24,6 @@ var graphicAssets = {
         URL: 'assets/green-laser.png',
         name: 'bullet'
     },
-
     enemySmall: {
         URL: 'assets/tie-fighter-top-white.png',
         name: 'enemySmall'
@@ -53,7 +36,6 @@ var graphicAssets = {
     //     URL: 'assets/asteroidSmall.png',
     //     name: 'asteroidSmall'
     // },
-
     explosionSmall: {
       URL:'assets/explosionSmall.png',
       name:'explosionSmall',
@@ -62,9 +44,6 @@ var graphicAssets = {
       frames:16,
     },
 };
-
-
-
 //////////////////////////////
 ////////// SOUND ASSETS
 //////////////////////////////
@@ -74,12 +53,6 @@ var soundAssets = {
     name: 'fire',
   },
 };
-
-
-
-
-
-
 //////////////////////////////
 ////////// SHIP PROPERTIES
 //////////////////////////////
@@ -97,11 +70,6 @@ var shipProperties = {
     timeToReset: 3,
     startingScore: 0,
 };
-
-
-
-
-
 //////////////////////////////
 ////////// BULLET PROPERTIES
 //////////////////////////////
@@ -112,11 +80,6 @@ var bulletProperties = {
     lifespan: 2000,
     maxCount: 30,
 }
-
-
-
-
-
 //////////////////////////////
 ////////// ASTEROID PROPERTIES
 //////////////////////////////
@@ -124,7 +87,6 @@ var asteroidProperties = {
     startingAsteroids: 5, // # of asteroids at game start
     maxAsteroids: 20, // # asteroids that will appear in a round
     incrementAsteroids: 2, // # of additional asteroids per round
-
     // minVelocity: min asteroid speed
     // maxVelocity: max asteroid speed
     // minAngularVelocity: min rotation speed
@@ -140,11 +102,6 @@ var asteroidProperties = {
         explosion: 'explosionSmall',
     },
 };
-
-
-
-
-
 var fontAssets = {
     // font to use for on screen display
     counterFontStyle: {
@@ -153,39 +110,27 @@ var fontAssets = {
         align: 'center'
     },
 };
-
-
-
-
+// declarations and initializations
 var gameState = function(game) {
     this.backgroundSprite;
     this.shipSprite;
-
     this.key_left;
     this.key_right;
     this.key_thrust;
     this.key_fire;
-
     this.bulletGroup;
     this.bulletInterval = 0;
-
     this.asteroidGroup;
     this.asteroidsCount = asteroidProperties.startingAsteroids;
-
     this.shipLives = shipProperties.startingLives;
     this.shipLivesDisplay;
-
     this.score = shipProperties.startingScore;
     this.scoreDisplay;
-
     this.fireSound;
-
     this.explosionSmallGroup;
-
 };
 
 gameState.prototype = {
-
     //////////////////////////////
     ////////// PRELOAD
     //////////////////////////////
@@ -207,8 +152,6 @@ gameState.prototype = {
         );
 
     },
-
-
     //////////////////////////////
     ////////// CREATE
     //////////////////////////////
@@ -219,8 +162,6 @@ gameState.prototype = {
         this.initKeyboard();
         this.resetAsteroids();
     },
-
-
     //////////////////////////////
     ////////// UPDATE
     //////////////////////////////
@@ -233,7 +174,13 @@ gameState.prototype = {
         game.physics.arcade.overlap(this.bulletGroup, this.asteroidGroup, this.asteroidCollision, null, this);
         game.physics.arcade.overlap(this.shipSprite, this.asteroidGroup, this.asteroidCollision, null, this);
     },
-
+    //////////////////////////////
+    ////////// RENDER
+    //////////////////////////////
+    render: function() {
+      game.debug.text('Time: ' + this.game.time.totalElapsedSeconds().toFixed(2), 20, 50);
+      game.debug.text()
+    },
     //////////////////////////////
     ////////// GRAPHICS
     //////////////////////////////
@@ -263,20 +210,17 @@ gameState.prototype = {
         // callAll( method, context, name for this animation, frames to use (null being all), fps )
         this.explosionSmallGroup.callAll('animations.add', 'animations', 'explode', null, 30);
 
-
         // display remaining lives
         // (x coordinate, y coordinate, string, style)
         this.shipLivesDisplay = game.add.text(20, 10, shipProperties.startingLives, fontAssets.counterFontStyle);
 
         this.scoreDisplay = game.add.text(20, 30, shipProperties.startingScore, fontAssets.counterFontStyle);
 
+        // this.timeDisplay = game.add.text(20, 50, game.time.now,   fontAssets.counterFontStyle);
     },
-
     initSounds: function() {
       this.fireSound = game.add.audio(soundAssets.fire.name);
-
     },
-
     //////////////////////////////
     ////////// PHYSICS
     //////////////////////////////
@@ -296,7 +240,7 @@ gameState.prototype = {
         // add the bullets to the bullet group
         // ( # OF BULLETS, GRAPHIC TO USE )
         this.bulletGroup.createMultiple(bulletProperties.maxCount, graphicAssets.bullet.name);
-        // set the spawn point of the bullets to be the x and y location of the player's ship (first parameter). The second parameter specifies the location withing the ship's width/height for the bullet to spawn. Here is it 0
+        // set the spawn point of the bullets to be the x and y location of the player's ship (first parameter). The second parameter specifies the location withing the ship's width/height for the bullet to spawn.
         this.bulletGroup.setAll('anchor.x', 0);
         this.bulletGroup.setAll('anchor.y', 0);
         // set when the bullets will be removed from the game
@@ -306,7 +250,6 @@ gameState.prototype = {
         this.asteroidGroup.enableBody = true;
         this.asteroidGroup.physicsBodyType = Phaser.Physics.ARCADE;
     },
-
     // Pass a key code value that corresponds with the key pressed. For example, LEFT's value is 37.
     initKeyboard: function() {
         this.key_left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -314,7 +257,6 @@ gameState.prototype = {
         this.key_thrust = game.input.keyboard.addKey(Phaser.Keyboard.UP);
         this.key_fire = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     },
-
     // listen for directional arrow presses
     // this is called every frame loop
     // only one key is being checked at a time
@@ -352,13 +294,10 @@ gameState.prototype = {
             sprite.y = 0;
         }
     },
-
-
     fire: function() {
         if (!this.shipSprite.alive) {
           return;
         }
-
         // check if the game clock has passed the minimum bullet fire interval
         if (game.time.now > this.bulletInterval) {
           this.fireSound.play();
@@ -369,7 +308,7 @@ gameState.prototype = {
             // if a new bullet was successfully created (should always be true unless the max bullets number has been reached)...
             if (bullet) {
 
-                // length will be used to position the bullet directly in front of the ship
+                // length will be used to calculate the position directly in front of the ship
                 var length = this.shipSprite.width * 0.1;
                 // calculate the coordinates of the bullet in relation to the ship
                 var x = this.shipSprite.x + (Math.cos(this.shipSprite.rotation) * length);
@@ -383,14 +322,12 @@ gameState.prototype = {
                 // set the bullet speed and direction
                 game.physics.arcade.velocityFromRotation(this.shipSprite.rotation, bulletProperties.speed, bullet.body.velocity);
 
-
                 console.log("fire");
                 // set when the bullet should disappear
                 this.bulletInterval = game.time.now + bulletProperties.interval;
             }
         }
     },
-
     // size argument is asteroidSmall, asteroidMedium, or enemySmall
     createAsteroid: function(x, y, size) {
 
@@ -402,30 +339,54 @@ gameState.prototype = {
         // [size] is replaced with the value of the size argument
         asteroid.body.angularVelocity = game.rnd.integerInRange(asteroidProperties[size].minAngularVelocity, asteroidProperties[size].maxAngularVelocity);
 
-        // generate random angle
+        // generate random trajectory
         // angle() returns value between -180 to 180.
         var randomAngle = game.math.degToRad(game.rnd.angle());
+
         // generate random speed
         var randomVelocity = game.rnd.integerInRange(asteroidProperties[size].minVelocity, asteroidProperties[size].maxVelocity);
 
         // assign the generated values to the asteroid
         game.physics.arcade.velocityFromRotation(randomAngle, randomVelocity, asteroid.body.velocity);
-
-
     },
 
-
+    // example
     // generate random x and y asteroid spawn points
+    // resetAsteroids: function() {
+    //     for (var i = 0; i < this.asteroidsCount; i++) {
+    //         var x = Math.random() * gameProperties.screenWidth;
+    //         var y = Math.random() * gameProperties.screenHeight;
+    //         this.createAsteroid(x, y, graphicAssets.enemySmall.name);
+    //     }
+    // },
     resetAsteroids: function() {
-        for (var i = 0; i < this.asteroidsCount; i++) {
-            var x;
-            var y;
-            x = Math.random() * gameProperties.screenWidth;
-            y = Math.random() * gameProperties.screenHeight;
-            this.createAsteroid(x, y, graphicAssets.enemySmall.name);
+      for (var i = 0; i < this.asteroidsCount; i++) {
+        var x=0;
+        var y=0;
+        // the asteroid must spawn at one of the screen edges. The z variable splits the options into two groups, top/bottom (if z=1) and left/right (if z=0).
+        // inside that decision, z2 will decide which specific side will be used
+        var z = Math.round(Math.random());
+        var z2 = Math.round(Math.random());
+        if (z) {
+          x = Math.random() * gameProperties.screenWidth;
+          if (z2) {
+            y = 0;
+          } else {
+            y = gameProperties.screenHeight;
+          }
+        } else {
+          y = Math.random() * gameProperties.screenWidth;
+          // if (z2) {
+          if (z2) {
+            x = 0;
+          } else {
+            x = gameProperties.screenWidth;
+          }
         }
+        console.log(x, y);
+        this.createAsteroid(x, y, graphicAssets.enemySmall.name);
+      }
     },
-
     asteroidCollision: function(target, asteroid) {
         // upon collision of 2 objects, delete them both
         target.kill();
@@ -441,11 +402,9 @@ gameState.prototype = {
         // ( name, frameRate, loop, killOnComplete )
         explosion.animations.play('explode', null, false, true);
 
-
         // if the object that hit the asteroid was the ship, run the shipDestroyed function
         if (target.key == graphicAssets.ship.name) {
             this.shipDestroyed();
-
         // if the object that hit the asteroid was the bullet, run the asteroidDestroyed function
         } else if (target.key == graphicAssets.bullet.name) {
           this.asteroidDestroyed(asteroid);
@@ -453,32 +412,23 @@ gameState.prototype = {
           getRandomQuote();
         }
     },
-
     shipDestroyed: function() {
         this.shipLives --;
         this.shipLivesDisplay.text = this.shipLives;
-
-
         if (this.shipLives) {
             // arguments ( delay timer, callback, context )
             game.time.events.add(Phaser.Timer.SECOND * shipProperties.timeToReset, this.shipRespawn, this);
         }
     },
-
     asteroidDestroyed(asteroid) {
       this.score += asteroidProperties[asteroid.key].score;
       this.scoreDisplay.text = this.score;
-      if (this.score === 100) {
-
-      }
     },
-
     shipRespawn: function() {
         this.shipSprite.reset(shipProperties.startX, shipProperties.startY);
         this.shipSprite.angle = -90;
     }
 };
-
 var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'gameDiv');
 game.state.add(states.game, gameState);
 game.state.start(states.game);
