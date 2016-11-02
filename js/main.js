@@ -1,5 +1,5 @@
 'use strict';
-var $playerName;
+var $playerName = "padahwun";
 
 
 ////////////////////////////
@@ -11,7 +11,9 @@ $(window).load(function(){
 
 // set player name
 $('#name-button').click(function(event) {
-  $playerName = $('#player-name').val();
+  if ($('#player-name').val() !== "") {
+    $playerName = $('#player-name').val();
+  }
   $('#welcome-modal').modal('toggle');
 });
 // skip player name
