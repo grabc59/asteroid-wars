@@ -17,7 +17,7 @@ function getRandomQuote() {
 function pullYodaAudio(randomQuote) {
     // Request an audio file of the random text quote
     jQuery.getJSON(
-        "http://vaas.acapela-group.com/Services/UrlMaker?jsoncallback=?", {
+        "//vaas.acapela-group.com/Services/UrlMaker?jsoncallback=?", {
             prot_vers: 2,
             cl_login: "EVAL_VAAS",
             cl_app: "EVAL_9746108",
