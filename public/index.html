@@ -49,25 +49,51 @@
                             <button class="btn btn-primary" id="skip-button">
                                 Skip
                             </button>
-
                         </div>
                     </div>
                     <br>
-                    <!-- </form> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="gameover-modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="gameover-modal-background">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>GAME OVER</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="assets/yoda2.jpg" alt="yoda welcome">
+                        </div>
+                        <div class="modal-main col-md-6">
+                              <label for="player-name">Name</label>
+                              <input type="text" id="player-name-field" name="player-name-field" />
+                            <br>
+                            <label for="player-score">Score</label>
+                            <input type="text" placeholder="" id="player-score-field" name="player-score" readonly />
+                            <br>
+                            <label for="player-time">Time</label>
+                            <input type="text" placeholder="" id="player-time-field" name="player-time" readonly />
+                            <br>
+                            <button class="btn btn-primary" id="submit-score-button">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                    <br>
                 </div>
             </div>
         </div>
     </div>
     <div class="site-wrapper">
-
         <div class="site-wrapper-inner">
-
             <div class="cover-container">
-
                 <div class="masthead clearfix">
-
                     <div class="inner">
-
                         <h1 class="masthead-brand">ASTEROID WARS</h1>
                         <nav>
                             <ul class="nav masthead-nav">
@@ -78,7 +104,6 @@
                     </div>
                 </div>
             </div>
-
                 <div id = "game-container" class="row">
                     <!-- <div class="col-md-2"> -->
                         <img id="vader" src="assets/vader4.png" alt="vader">

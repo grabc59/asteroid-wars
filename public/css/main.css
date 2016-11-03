@@ -8,15 +8,17 @@
 
 
 /*   MODAL  */
-#welcome-modal-background {
+
+.modal-content {
   background-color: black;
 }
-#welcome-modal-background h3, .inner h1 {
+
+.modal-content h3, .inner h1 {
   font-family: 'distant-galaxy';
 }
 
-#welcome-modal-background input, select, textarea{
-    color: black;
+.modal-content input, select, textarea {
+  color: black;
 }
 
 .modal-main {
