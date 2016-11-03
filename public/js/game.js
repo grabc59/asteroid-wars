@@ -99,7 +99,7 @@ var asteroidProperties = {
     // explosion: the name property of the explosion image to use upon destruction
     enemySmall: {
         minVelocity: 50,
-        maxVelocity: 150,
+        maxVelocity: 300,
         minAngularVelocity: 0,
         maxAngularVelocity: 200,
         score: 20,
@@ -231,11 +231,13 @@ gameState.prototype = {
         // callAll( method, context, name for this animation, frames to use (null being all), fps )
         this.explosionSmallGroup.callAll('animations.add', 'animations', 'explode', null, 30);
 
+        game.add.text(20, 10, "Lives", fontAssets.counterFontStyle);
         // display remaining lives
         // (x coordinate, y coordinate, string, style)
-        this.shipLivesDisplay = game.add.text(20, 10, shipProperties.startingLives, fontAssets.counterFontStyle);
+        this.shipLivesDisplay = game.add.text(90, 10, shipProperties.startingLives, fontAssets.counterFontStyle);
 
-        this.scoreDisplay = game.add.text(20, 30, shipProperties.startingScore, fontAssets.counterFontStyle);
+        game.add.text(20, 30, "Score", fontAssets.counterFontStyle);
+        this.scoreDisplay = game.add.text(90, 30, shipProperties.startingScore, fontAssets.counterFontStyle);
 
     },
     initSounds: function() {
@@ -380,7 +382,6 @@ gameState.prototype = {
     //     }
     // },
     resetAsteroids: function(asteroidsToMake) {
-      console.log(asteroidsToMake);
       for (var i = 0; i < asteroidsToMake; i++) {
         var x=0;
         var y=0;
@@ -413,9 +414,11 @@ gameState.prototype = {
         asteroid.kill();
         shipProperties.killCount++;
         if (shipProperties.killCount < asteroidProperties.maxAsteroids) {
-          console.log("run");
           this.resetAsteroids(1);
-
+        } else if (shipProperties.killCount == asteroidProperties.maxAsteroids + 1) {
+          //pass the current time and score to the gameover modal
+          gameOver(this.score, this.game.time.totalElapsedSeconds().toFixed(2));
+          getRandomQuote(successQuotes);
         }
 
         // check which explosion group the killed asteroid is in
@@ -434,19 +437,19 @@ gameState.prototype = {
         // if the object that hit the asteroid was the bullet, run the asteroidDestroyed function
         } else if (target.key == graphicAssets.bullet.name) {
           this.asteroidDestroyed(asteroid);
-          // queueYoda is defined in voice.js
-          getRandomQuote();
         }
     },
     shipDestroyed: function() {
         this.shipLives --;
         this.shipLivesDisplay.text = this.shipLives;
+        getRandomQuote(encouragementQuotes);
         if (this.shipLives) {
             // arguments ( delay timer, callback, context )
             game.time.events.add(Phaser.Timer.SECOND * shipProperties.timeToReset, this.shipRespawn, this);
         } else {
           //pass the current time and score to the gameover modal
           gameOver(this.score, this.game.time.totalElapsedSeconds().toFixed(2));
+          getRandomQuote(failureQuotes);
         }
     },
     asteroidDestroyed(asteroid) {

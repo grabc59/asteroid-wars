@@ -3,10 +3,6 @@
   src: url('../assets/Distant-Galaxy/DISTGRG_.ttf');
 }
 
-
-
-
-
 /*   MODAL  */
 
 .modal-content {
@@ -25,13 +21,10 @@
   margin-top: 150px;
 }
 
-
-
 /* NAV */
 .nav>li>a {
     display: inline;
 }
-
 
 /* GAME */
 #gameDiv {
@@ -82,6 +75,7 @@
   width: 40%;
   margin: auto;
 }
-#highScores th {
-  width: 100%;
+#highScores th, td {
+  width: 50px;
+  text-align: center;
 }

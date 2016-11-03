@@ -82,6 +82,9 @@
                             <button class="btn btn-primary" id="submit-score-button">
                                 Submit
                             </button>
+                            <button class="btn btn-primary" id="play-again-button">
+                                Play Again
+                            </button>
                         </div>
                     </div>
                     <br>
@@ -121,17 +124,21 @@
                 <div class="cover-container">
                 <section>
                     <table id="highScores">
-                        <h3>High Scores</h3>
+                        <h3>High Score</h3>
                         <thead>
                             <tr>
                                 <th>Player</th>
                                 <th>Score</th>
+                                <th>Time</th>
                             </tr>
                         </thead>
                         <tbody>
+                          <tr>
+                            <td id="highPlayer"></td>
+                            <td id="highScore"></td>
+                            <td id="highTime"></td>
+                          </tr>
                         </tbody>
-                        <tfoot>
-                        </tfoot>
                     </table>
                 </section>
               </div>
