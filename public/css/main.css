@@ -8,6 +8,9 @@
 }
 
 /*   MODAL  */
+.modal h3 {
+  text-align: center;
+}
 
 .modal {
   text-align: center;
