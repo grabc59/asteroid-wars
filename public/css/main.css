@@ -14,7 +14,7 @@
 
 .modal {
   text-align: center;
-  padding: 0!important;
+  /*padding: 0!important;*/
 }
 
 .modal:before {
@@ -27,7 +27,7 @@
 
 .modal-dialog {
   display: inline-block;
-  text-align: left;
+  /*text-align: left;*/
   vertical-align: middle;
 }
 #welcome-modal {
@@ -47,7 +47,7 @@
 }
 
 button  {
-  margin-left: 40px;
+  /*margin-left: 20px;*/
 }
 #player-time-field {
   margin-left: 6px;
