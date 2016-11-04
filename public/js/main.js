@@ -4,10 +4,10 @@ var $playerName = "Padawon";
 
 
 $(window).load(function(){
-  console.log(localStorage.user);
+  // console.log(localStorage.user);
   if (localStorage.user != "") {
     $('#player-name').val(localStorage.user);
-    console.log(localStorage.user);
+    // console.log(localStorage.user);
   }
   $('#welcome-modal').modal('show');
   $('#highPlayer').text(localStorage.user);
@@ -27,9 +27,9 @@ $('#name-button').click(function(event) {
   $('#welcome-modal').modal('toggle');
 });
 // skip player name
-$('#skip-button').click(function(event) {
-  $('#welcome-modal').modal('toggle');
-});
+// $('#skip-button').click(function(event) {
+//   $('#welcome-modal').modal('toggle');
+// });
 
 
 ////////////////////////////
@@ -42,7 +42,7 @@ function gameOver (score, time) {
   $('#player-score-field').val(score);
 }
 
-$('#submit-score-button').click(function(event) {
+$('#play-again-button').click(function(event) {
   if (localStorage.score === undefined) {
     addScore();
   } else if ($('#player-score-field').val() > JSON.parse(localStorage.score)) {
@@ -50,10 +50,11 @@ $('#submit-score-button').click(function(event) {
   } else if ($('#player-score-field').val() == JSON.parse(localStorage.score) && $('#player-time-field').val() < JSON.parse(localStorage.time)) {
     addScore();
   }
-});
-$('#play-again-button').click(function(event) {
   location.reload();
-})
+});
+// $('#play-again-button').click(function(event) {
+//   location.reload();
+// })
 
 function addScore() {
   localStorage.user = $playerName;
