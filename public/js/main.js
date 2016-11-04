@@ -1,9 +1,14 @@
 'use strict';
-var $playerName = "padahwun";
+var $playerName = "Padawon";
 
 
 
 $(window).load(function(){
+  console.log(localStorage.user);
+  if (localStorage.user != "") {
+    $('#player-name').val(localStorage.user);
+    console.log(localStorage.user);
+  }
   $('#welcome-modal').modal('show');
   $('#highPlayer').text(localStorage.user);
   $('#highTime').text(localStorage.time);
@@ -17,6 +22,7 @@ $(window).load(function(){
 $('#name-button').click(function(event) {
   if ($('#player-name').val() !== "") {
     $playerName = $('#player-name').val();
+    game.state.start(states.game);
   }
   $('#welcome-modal').modal('toggle');
 });
@@ -41,7 +47,12 @@ $('#submit-score-button').click(function(event) {
     addScore();
   } else if ($('#player-score-field').val() > JSON.parse(localStorage.score)) {
     addScore();
+  } else if ($('#player-score-field').val() == JSON.parse(localStorage.score) && $('#player-time-field').val() < JSON.parse(localStorage.time)) {
+    addScore();
   }
+});
+$('#play-again-button').click(function(event) {
+  location.reload();
 })
 
 function addScore() {

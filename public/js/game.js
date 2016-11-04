@@ -1,5 +1,6 @@
 'use strict';
 // Canvas size
+
 var gameProperties = {
     screenWidth: 760,
     screenHeight: 480,
@@ -72,7 +73,7 @@ var shipProperties = {
     startingLives: 3,
     timeToReset: 3,
     startingScore: 0,
-    killCount: 0,
+
 };
 //////////////////////////////
 ////////// BULLET PROPERTIES
@@ -89,8 +90,7 @@ var bulletProperties = {
 //////////////////////////////
 var asteroidProperties = {
     startingAsteroids: 5, // # of asteroids at game start
-    maxAsteroids: 20, // # asteroids that will appear in a round
-    incrementAsteroids: 2, // # of additional asteroids per round
+    maxAsteroids: 10, // # asteroids that will appear in a round
     // minVelocity: min asteroid speed
     // maxVelocity: max asteroid speed
     // minAngularVelocity: min rotation speed
@@ -99,7 +99,7 @@ var asteroidProperties = {
     // explosion: the name property of the explosion image to use upon destruction
     enemySmall: {
         minVelocity: 50,
-        maxVelocity: 300,
+        maxVelocity: 100,
         minAngularVelocity: 0,
         maxAngularVelocity: 200,
         score: 20,
@@ -125,7 +125,10 @@ var gameState = function(game) {
     this.bulletGroup;
     this.bulletInterval = 0;
     this.asteroidGroup;
-    this.asteroidsCount = asteroidProperties.startingAsteroids;
+    // this.killCount = asteroidProperties.startingAsteroids;
+    this.killCount = 0;
+    this.asteroidsCount = asteroidProperties.maxAsteroids;
+    this.asteroidsCountDisplay;
     this.shipLives = shipProperties.startingLives;
     this.shipLivesDisplay;
     this.score = shipProperties.startingScore;
@@ -226,18 +229,21 @@ gameState.prototype = {
         this.explosionSmallGroup.createMultiple(20, graphicAssets.explosionSmall.name, 0);
         this.explosionSmallGroup.setAll('anchor.x', 0.5);
         this.explosionSmallGroup.setAll('anchor.y', 0.5);
-        // callAll adds explode animation to each boject in the explosionSmallGroup
+        // callAll adds explode animation to each object in the explosionSmallGroup
         // data structure:
         // callAll( method, context, name for this animation, frames to use (null being all), fps )
         this.explosionSmallGroup.callAll('animations.add', 'animations', 'explode', null, 30);
 
-        game.add.text(20, 10, "Lives", fontAssets.counterFontStyle);
+        // game.add.text(20, 50, "Enemies:", fontAssets.counterFontStyle);
+        // this.asteroidsCountDisplay = game.add.text(110, 50, this.asteroidsCount, fontAssets.counterFontStyle);
+        game.add.text(20, 10, "Lives:", fontAssets.counterFontStyle);
         // display remaining lives
         // (x coordinate, y coordinate, string, style)
         this.shipLivesDisplay = game.add.text(90, 10, shipProperties.startingLives, fontAssets.counterFontStyle);
 
-        game.add.text(20, 30, "Score", fontAssets.counterFontStyle);
+        game.add.text(20, 30, "Score:", fontAssets.counterFontStyle);
         this.scoreDisplay = game.add.text(90, 30, shipProperties.startingScore, fontAssets.counterFontStyle);
+
 
     },
     initSounds: function() {
@@ -398,7 +404,6 @@ gameState.prototype = {
           }
         } else {
           y = Math.random() * gameProperties.screenWidth;
-          // if (z2) {
           if (z2) {
             x = 0;
           } else {
@@ -412,10 +417,14 @@ gameState.prototype = {
         // upon collision of 2 objects, delete them both
         target.kill();
         asteroid.kill();
-        shipProperties.killCount++;
-        if (shipProperties.killCount < asteroidProperties.maxAsteroids) {
+        // this.asteroidsCount--;
+        // this.asteroidsCountDisplay.text = this.asteroidsCount;
+        this.killCount++;
+        if (this.killCount <= (asteroidProperties.maxAsteroids - asteroidProperties.startingAsteroids)) {
+        // if (this.asteroidsCount > 0 ) {
           this.resetAsteroids(1);
-        } else if (shipProperties.killCount == asteroidProperties.maxAsteroids + 1) {
+        } else if (this.killCount === asteroidProperties.maxAsteroids) {
+        // } else {
           //pass the current time and score to the gameover modal
           gameOver(this.score, this.game.time.totalElapsedSeconds().toFixed(2));
           getRandomQuote(successQuotes);
@@ -437,6 +446,7 @@ gameState.prototype = {
         // if the object that hit the asteroid was the bullet, run the asteroidDestroyed function
         } else if (target.key == graphicAssets.bullet.name) {
           this.asteroidDestroyed(asteroid);
+
         }
     },
     shipDestroyed: function() {
@@ -456,6 +466,7 @@ gameState.prototype = {
       this.score += asteroidProperties[asteroid.key].score;
       this.scoreDisplay.text = this.score;
 
+
     },
     shipRespawn: function() {
         this.shipSprite.reset(shipProperties.startX, shipProperties.startY);
@@ -467,4 +478,3 @@ gameState.prototype = {
 // }
 var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'gameDiv');
 game.state.add(states.game, gameState);
-game.state.start(states.game);
