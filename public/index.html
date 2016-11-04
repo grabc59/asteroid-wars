@@ -97,13 +97,26 @@
             <div class="cover-container">
                 <div class="masthead clearfix">
                     <div class="inner">
-                        <h1 class="masthead-brand">ASTEROID WARS</h1>
-                        <nav>
-                            <ul class="nav masthead-nav">
-                                <li class="active"><a href="#">Home</a></li>
-                                <li><a href="#">Feedback</a></li>
-                            </ul>
-                        </nav>
+                        <h1 id="logo" class="masthead-brand">ASTEROID WARS</h1>
+                        <section>
+                          <h3>High Score</h3>
+                            <table id="highScores">
+                                <thead>
+                                    <tr>
+                                        <th>Player</th>
+                                        <th>Score</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td id="highPlayer"></td>
+                                    <td id="highScore"></td>
+                                    <td id="highTime"></td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -122,25 +135,7 @@
                 </div>
 
                 <div class="cover-container">
-                <section>
-                    <table id="highScores">
-                        <h3>High Score</h3>
-                        <thead>
-                            <tr>
-                                <th>Player</th>
-                                <th>Score</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td id="highPlayer"></td>
-                            <td id="highScore"></td>
-                            <td id="highTime"></td>
-                          </tr>
-                        </tbody>
-                    </table>
-                </section>
+
               </div>
 
             <div class="mastfoot">

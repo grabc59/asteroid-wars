@@ -3,20 +3,20 @@
   src: url('../assets/Distant-Galaxy/DISTGRG_.ttf');
 }
 
-/*   MODAL  */
+#logo {
+  margin-top: 40px;
+}
 
+/*   MODAL  */
 .modal-content {
   background-color: black;
 }
-
 .modal-content h3, .inner h1 {
   font-family: 'distant-galaxy';
 }
-
 .modal-content input, select, textarea {
   color: black;
 }
-
 .modal-main {
   margin-top: 150px;
 }
@@ -25,6 +25,7 @@
 .nav>li>a {
     display: inline;
 }
+
 
 /* GAME */
 #gameDiv {
