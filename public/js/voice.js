@@ -41,6 +41,7 @@ function getRandomQuote(quoteArray) {
 
 function pullYodaAudio(quote) {
     // Request an audio file of the random text quote
+    console.log("got quote");
     jQuery.getJSON(
         "//vaas.acapela-group.com/Services/UrlMaker?jsoncallback=?", {
             prot_vers: 2,
@@ -53,10 +54,12 @@ function pullYodaAudio(quote) {
             req_text: quote,
             //to produce ogg vorbis files, for MP3 you can remove this param.
             req_snd_type: "OGG"
+
         },
         function(data) {
             // Create the audio player, autoplay the sound downloaded
             $("#demo_voices_player").html("<audio src='" + data.snd_url + "' controls='controls' autoplay='autoplay' style='display: none'/>");
+            console.log("Play quote");
         }
     );
 //     $(document).ready(function()

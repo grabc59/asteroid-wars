@@ -22,9 +22,12 @@ $(window).load(function(){
 $('#name-button').click(function(event) {
   if ($('#player-name').val() !== "") {
     $playerName = $('#player-name').val();
-    game.state.start(states.game);
+
   }
+  game.state.start(states.game);
   $('#welcome-modal').modal('toggle');
+  pullYodaAudio("May the force be with you, " + $playerName);
+  console.log("called yoda");
 });
 // skip player name
 // $('#skip-button').click(function(event) {
