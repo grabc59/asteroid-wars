@@ -21,6 +21,7 @@ var failureQuotes = [
 var successQuotes = [
   "Feel the force!",
   "Strong with you the force is!",
+  "I am your father",
 ];
 
 // pick one of the locally available text quotes
