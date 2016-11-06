@@ -105,6 +105,7 @@ var fontAssets = {
 };
 
 // declarations and initializations
+// give functions access to phaser 'game' methods
 var gameState = function(game) {
     this.backgroundSprite;
     this.shipSprite;
@@ -134,7 +135,6 @@ gameState.prototype = {
     preload: function() {
         // load image graphics for use in the game
         // game.load.image(name used to reference image, URL)
-        // optional overwrite argument, to replace an asset if the specified key already exists
         game.load.image(graphicAssets.background.name, graphicAssets.background.URL);
         game.load.image(graphicAssets.enemySmall.name, graphicAssets.enemySmall.URL);
 
@@ -159,11 +159,10 @@ gameState.prototype = {
         this.initKeyboard();
         this.resetAsteroids(asteroidProperties.startingAsteroids);
 
-        // Create a label to use as a button
+        // Pause button
        var pause_label = game.add.text(680, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
        pause_label.inputEnabled = true;
        pause_label.events.onInputUp.add(function () {
-       // When the paus button is pressed, we pause the game
        game.paused = true;
        pause_label.setText("Play");
         });
