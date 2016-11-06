@@ -32,25 +32,16 @@ function getRandomQuote(quoteArray) {
 };
 
 
-
-// function getRandomQuote() {
-//   var randomQuote = $playerName + ", " + staticQuotes[Math.floor(Math.random() * staticQuotes.length)];
-//   pullYodaAudio(randomQuote)
-// };
-
-
-
 function pullYodaAudio(quote) {
     // Request an audio file of the random text quote
-    console.log("got quote");
     jQuery.getJSON(
         "//vaas.acapela-group.com/Services/UrlMaker?jsoncallback=?", {
             prot_vers: 2,
             cl_login: "EVAL_VAAS",
-            // cl_app: "EVAL_9746108",
-            cl_app: "EVAL_7481435",
-            // cl_pwd: "gzgmj4x9",
-            cl_pwd: "x70lgxga",
+            // cl_app: "EVAL_9746108", // original login
+            cl_app: "EVAL_7481435", // steve's login
+            // cl_pwd: "gzgmj4x9", // original pwd
+            cl_pwd: "x70lgxga", // steve's pwd
             req_voice: "willlittlecreature22k",
             req_text: quote,
             //to produce ogg vorbis files, for MP3 you can remove this param.
@@ -60,27 +51,6 @@ function pullYodaAudio(quote) {
         function(data) {
             // Create the audio player, autoplay the sound downloaded
             $("#demo_voices_player").html("<audio src='" + data.snd_url + "' controls='controls' autoplay='autoplay' style='display: none'/>");
-            console.log("Play quote");
         }
     );
-//     $(document).ready(function()
-// {
-  // Request with Steve's key, original key stopped working.
-//   jQuery.getJSON
-//   (
-//     "http://vaas.acapela-group.com/Services/UrlMaker?jsoncallback=?",
-//    {
-//       prot_vers: 2, cl_login: "EVAL_VAAS", cl_app: "EVAL_7481435", cl_pwd: "x70lgxga",
-//       req_voice:"ryan22k",
-//       req_text:"Hello world, how's it going ?",
-//       //to produce ogg vorbis files, for MP3 you can remove this param.
-//       req_snd_type:"OGG"
-//    },
-//    function(data)
-//    {
-//       // Data exploitation
-//       $("#demo1player").html("<audio src='"+data.snd_url+"' controls='controls' />");
-//    }
-// );
-// });
-};
+}

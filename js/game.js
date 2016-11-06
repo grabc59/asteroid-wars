@@ -1,20 +1,19 @@
 'use strict';
-// Canvas size
 
 var gameProperties = {
     screenWidth: 760,
     screenHeight: 480,
 };
 var states = {
-    // main: "main",
     game: "game",
 };
 
 
 ////////////////////////////////
-//////// GRAPHIC ASSETS
+//////// GAME ASSETS
 ////////////////////////////////
-// stores game images for manipulation
+
+//graphic assets
 var graphicAssets = {
     background: {
       URL: 'assets/deep-space-background.jpg',
@@ -32,14 +31,6 @@ var graphicAssets = {
         URL: 'assets/tie-fighter-top-white.png',
         name: 'enemySmall'
     },
-    // asteroidMedium: {
-    //     URL: 'assets/asteroidMedium.png',
-    //     name: 'asteroidMedium'
-    // },
-    // asteroidSmall: {
-    //     URL: 'assets/asteroidSmall.png',
-    //     name: 'asteroidSmall'
-    // },
     explosionSmall: {
       URL:'assets/explosionSmall.png',
       name:'explosionSmall',
@@ -48,9 +39,7 @@ var graphicAssets = {
       frames:16,
     },
 };
-//////////////////////////////
-////////// SOUND ASSETS
-//////////////////////////////
+//sound assets
 var soundAssets = {
   fire: {
     URL: 'assets/sounds/x-wing-blaster-sound.mp3',
@@ -114,6 +103,7 @@ var fontAssets = {
         align: 'center'
     },
 };
+
 // declarations and initializations
 var gameState = function(game) {
     this.backgroundSprite;
@@ -125,7 +115,6 @@ var gameState = function(game) {
     this.bulletGroup;
     this.bulletInterval = 0;
     this.asteroidGroup;
-    // this.killCount = asteroidProperties.startingAsteroids;
     this.killCount = 0;
     this.asteroidsCount = asteroidProperties.maxAsteroids;
     this.asteroidsCountDisplay;
@@ -144,7 +133,7 @@ gameState.prototype = {
     //////////////////////////////
     preload: function() {
         // load image graphics for use in the game
-        // game.load.image(KEY, URL, [OVERWRITE])
+        // game.load.image(name used to reference image, URL)
         // optional overwrite argument, to replace an asset if the specified key already exists
         game.load.image(graphicAssets.background.name, graphicAssets.background.URL);
         game.load.image(graphicAssets.enemySmall.name, graphicAssets.enemySmall.URL);
@@ -378,15 +367,6 @@ gameState.prototype = {
         game.physics.arcade.velocityFromRotation(randomAngle, randomVelocity, asteroid.body.velocity);
     },
 
-    // example
-    // generate random x and y asteroid spawn points
-    // resetAsteroids: function() {
-    //     for (var i = 0; i < this.asteroidsCount; i++) {
-    //         var x = Math.random() * gameProperties.screenWidth;
-    //         var y = Math.random() * gameProperties.screenHeight;
-    //         this.createAsteroid(x, y, graphicAssets.enemySmall.name);
-    //     }
-    // },
     resetAsteroids: function(asteroidsToMake) {
       for (var i = 0; i < asteroidsToMake; i++) {
         var x=0;
@@ -417,14 +397,11 @@ gameState.prototype = {
         // upon collision of 2 objects, delete them both
         target.kill();
         asteroid.kill();
-        // this.asteroidsCount--;
-        // this.asteroidsCountDisplay.text = this.asteroidsCount;
         this.killCount++;
         if (this.killCount <= (asteroidProperties.maxAsteroids - asteroidProperties.startingAsteroids)) {
-        // if (this.asteroidsCount > 0 ) {
           this.resetAsteroids(1);
         } else if (this.killCount === asteroidProperties.maxAsteroids) {
-        // } else {
+          // game over player wins
           //pass the current time and score to the gameover modal
           gameOver(this.score, this.game.time.totalElapsedSeconds().toFixed(2));
           getRandomQuote(successQuotes);
@@ -473,8 +450,9 @@ gameState.prototype = {
         this.shipSprite.angle = -90;
     }
 };
-// var mainState = function(game) {
-//   this.tf_start;
-// }
+
+// "game" inherits Phaser.Game properties from Phaser Framework "phaser.min.js"
+// this will allow us to use phaser's methods
 var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'gameDiv');
+// add our own game state, this will allow the game state to be started on button click (main.js)
 game.state.add(states.game, gameState);
