@@ -105,29 +105,16 @@ var fontAssets = {
 };
 
 // declarations and initializations
-// give functions access to phaser 'game' methods
-var gameState = function(game) {
-    this.backgroundSprite;
-    this.shipSprite;
-    this.key_left;
-    this.key_right;
-    this.key_thrust;
-    this.key_fire;
-    this.bulletGroup;
+// gameState will be a function, so it will initialize some variables.
+var gameState = function() {
     this.bulletInterval = 0;
-    this.asteroidGroup;
     this.killCount = 0;
     this.asteroidsCount = asteroidProperties.maxAsteroids;
-    this.asteroidsCountDisplay;
     this.shipLives = shipProperties.startingLives;
-    this.shipLivesDisplay;
     this.score = shipProperties.startingScore;
-    this.scoreDisplay;
-    this.fireSound;
-    this.explosionSmallGroup;
-
 };
 
+// Phaser will use gameState to access several other functions (preload, create, update, render). They are stored in gameState's prototype as object properties so gameState can access them.
 gameState.prototype = {
     //////////////////////////////
     ////////// PRELOAD
@@ -159,7 +146,7 @@ gameState.prototype = {
         this.initKeyboard();
         this.resetAsteroids(asteroidProperties.startingAsteroids);
 
-        // Pause button
+      // Pause button
        var pause_label = game.add.text(680, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
        pause_label.inputEnabled = true;
        pause_label.events.onInputUp.add(function () {
@@ -182,7 +169,7 @@ gameState.prototype = {
         this.checkBoundaries(this.shipSprite);
         this.asteroidGroup.forEachExists(this.checkBoundaries, this);
 
-        // use the physics overlap function to check if any bullet and any asteroid sprite boxes are touching. If so, call the asteroidCollision function.
+        // use the physics overlap function to check if any bullet and any asteroid sprite boxes are touching. If so, call the asteroidCollision function. (collision detection with axis-aligned bounding boxes)
         game.physics.arcade.overlap(this.bulletGroup, this.asteroidGroup, this.asteroidCollision, null, this);
         game.physics.arcade.overlap(this.shipSprite, this.asteroidGroup, this.asteroidCollision, null, this);
     },
@@ -222,7 +209,6 @@ gameState.prototype = {
         // callAll( method, context, name for this animation, frames to use (null being all), fps )
         this.explosionSmallGroup.callAll('animations.add', 'animations', 'explode', null, 30);
 
-        // game.add.text(20, 50, "Enemies:", fontAssets.counterFontStyle);
         // this.asteroidsCountDisplay = game.add.text(110, 50, this.asteroidsCount, fontAssets.counterFontStyle);
         game.add.text(20, 10, "Lives:", fontAssets.counterFontStyle);
         // display remaining lives
@@ -453,5 +439,5 @@ gameState.prototype = {
 // "game" inherits Phaser.Game properties from Phaser Framework "phaser.min.js"
 // this will allow us to use phaser's methods
 var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'gameDiv');
-// add our own game state, this will allow the game state to be started on button click (main.js)
+// add our own game state, this will allow the game state to be started on button click (main.js). It will also allow phaser to access the functions it needs (preload, create, update and render) through the gameState function
 game.state.add(states.game, gameState);
