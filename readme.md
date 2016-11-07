@@ -7,12 +7,13 @@ This project intends to create a way for people to take their minds off their wo
 
 This project will use HTML, CSS, Javascript, JQuery, localStorage, Bootstrap, JSON, and AJAX. The Acapella API will be used to translate String quotes to audio of Yoda's voice.
 
+## PUBLIC LINK
+asteroid-wars.surge.sh
 
 
+# PROJECT RETRO
 
-# Q1 project retro
-
-##Self assessment:
+## SELF ASSESSMENT:
 https://docs.google.com/document/d/1fVkCwVoBxM9oaHjJL0wrVL4LRf77onjxQAx_q8Lu6OM/edit
 
 ##  START
@@ -36,3 +37,23 @@ https://docs.google.com/document/d/1fVkCwVoBxM9oaHjJL0wrVL4LRf77onjxQAx_q8Lu6OM/
   - breaking work down into manageable chunks
   - getting feedback from people as work progresses
   - clean up comments and extra files as you
+
+
+# PROJECT PLANNING
+
+Describe your app in 3 sentences.
+  - Asteroid based game with a Star Wars twist. Fun distraction. Dynamic quotes from Yoda.
+What is your technology you are using?
+  - This project will use HTML, CSS, Javascript, JQuery, localStorage, Bootstrap, JSON, and AJAX. The Acapella API will be used to translate String quotes to audio of Yoda's voice.
+What is/are your API(s)?
+  - The Acapella API will be used to translate String quotes to audio of Yoda's voice.
+Include a link to your wireframes.
+  - https://github.com/grabc59/asteroid-wars/tree/master/wireframes
+Include a link to the Pivotal tracker project.
+  - https://www.pivotaltracker.com/n/projects/1908397
+Include your MVP goals.
+  - user can change the orientation of the character using keyboard input
+  - user can shoot using keyboard input
+  - user's score is tracked and displayed
+  - there is a definite beginning and end to the game
+  - user can hear Yoda speak to them while they play and when they enter the site
