@@ -1,6 +1,6 @@
 # Welcome to the Asteroid Wars project.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/sBEG0uQGRp8" frameborder="0" allowfullscreen></iframe>
+[![ASTEROID-WARS DEMO VIDEO](https://img.youtube.com/vi/sBEG0uQGRp8/0.jpg)](https://www.youtube.com/watch?v=sBEG0uQGRp8)
 
 ## PURPOSE
 This project aims to remedy burnout. Burnout happens to many people, but particularly in the software industry. The result of burnout is people become less motivated and less efficient in the long run.
