@@ -37,19 +37,16 @@
                         <div class="col-md-6">
                             <img src="assets/yoda2.jpg" alt="yoda welcome">
                         </div>
-                        <div class="modal-main col-md-6">
-                            <label for="player-name">What shall we call you?</label>
-                            <div class="input-field">
-                                <input type="text" placeholder="Enter your name" id="player-name" name="player-name" />
-                            </div>
-                            <br>
-                            <button class="btn btn-primary" id="name-button">
+                            <div class="modal-main col-md-6">
+                                <label for="player-name">What shall we call you?</label>
+                                <div class="input-field">
+                                    <input type="text" placeholder="Enter your name" id="player-name" name="player-name" />
+                                </div>
+                                <br>
+                                <button class="btn btn-primary" id="name-button">
                                 Submit
                             </button>
-                            <!-- <button class="btn btn-primary" id="skip-button">
-                                Skip
-                            </button> -->
-                        </div>
+                            </div>
                     </div>
                     <br>
                 </div>
@@ -69,23 +66,20 @@
                         <div class="col-md-6">
                             <img src="assets/yoda2.jpg" alt="yoda welcome">
                         </div>
-                        <div class="modal-main col-md-6">
-                              <label for="player-name">Name</label>
-                              <input type="text" id="player-name-field" name="player-name-field" />
-                            <br>
-                            <label for="player-score">Score</label>
-                            <input type="text" placeholder="" id="player-score-field" name="player-score" readonly />
-                            <br>
-                            <label for="player-time">Time  </label>
-                            <input type="text" placeholder="" id="player-time-field" name="player-time" readonly />
-                            <br>
-                            <!-- <button class="btn btn-primary" id="submit-score-button">
-                                Submit
-                            </button> -->
-                            <button class="btn btn-primary" id="play-again-button">
+                            <div class="modal-main col-md-6">
+                                <label for="player-name">Name</label>
+                                <input type="text" id="player-name-field" name="player-name-field" />
+                                <br>
+                                <label for="player-score">Score</label>
+                                <input type="text" placeholder="" id="player-score-field" name="player-score" readonly />
+                                <br>
+                                <label for="player-time">Time  </label>
+                                <input type="text" placeholder="" id="player-time-field" name="player-time" readonly />
+                                <br>
+                                <button class="btn btn-primary" id="play-again-button">
                                 Play Again
                             </button>
-                        </div>
+                            </div>
                     </div>
                     <br>
                 </div>
@@ -99,7 +93,7 @@
                     <div class="inner">
                         <h1 id="logo" class="masthead-brand">ASTEROID WARS</h1>
                         <section>
-                          <h3>High Score</h3>
+                            <h3>High Score</h3>
                             <table id="highScores">
                                 <thead>
                                     <tr>
@@ -109,34 +103,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td id="highPlayer"></td>
-                                    <td id="highScore"></td>
-                                    <td id="highTime"></td>
-                                  </tr>
+                                    <tr>
+                                        <td id="highPlayer"></td>
+                                        <td id="highScore"></td>
+                                        <td id="highTime"></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </section>
                     </div>
                 </div>
             </div>
-                <div id = "game-container" class="row">
-                    <!-- <div class="col-md-2"> -->
-                        <img id="vader" src="assets/vader4.png" alt="vader">
-                    <!-- </div> -->
-                    <!-- <div class="col-md-8"> -->
-                        <div id="gameDiv" >
-                            <section id="demo_voices_player"></section>
-                        </div>
-                    <!-- </div> -->
-                    <!-- <div class="col-md-2"> -->
-                        <img id="obiwan" src="assets/obi-wan.jpg" alt="obi wan">
-                    <!-- </div> -->
+            <div id="game-container" class="row">
+                <img id="vader" src="assets/vader4.png" alt="vader">
+                <div id="gameDiv">
+                    <section id="demo_voices_player"></section>
                 </div>
+                <img id="obiwan" src="assets/obi-wan.jpg" alt="obi wan">
+            </div>
 
-                <div class="cover-container">
+            <div class="cover-container">
 
-              </div>
+            </div>
 
             <div class="mastfoot">
 
@@ -152,15 +140,15 @@
     <!-- firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
     <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyCAVE_NKVgKGlpM2Ic6aoAUJs4lYxmt2Rg",
-        authDomain: "asteroid-wars.firebaseapp.com",
-        databaseURL: "https://asteroid-wars.firebaseio.com",
-        storageBucket: "asteroid-wars.appspot.com",
-        messagingSenderId: "965925740803"
-      };
-      firebase.initializeApp(config);
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCAVE_NKVgKGlpM2Ic6aoAUJs4lYxmt2Rg",
+            authDomain: "asteroid-wars.firebaseapp.com",
+            databaseURL: "https://asteroid-wars.firebaseio.com",
+            storageBucket: "asteroid-wars.appspot.com",
+            messagingSenderId: "965925740803"
+        };
+        firebase.initializeApp(config);
     </script>
 
 
